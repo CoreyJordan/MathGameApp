@@ -2,7 +2,7 @@
 
 namespace MathGameLibrary
 {
-    internal class PlayerModel
+    public class PlayerModel
     {
         public string PlayerName { get; set; }
         public List<GameModel> GameHistory { get; set; }

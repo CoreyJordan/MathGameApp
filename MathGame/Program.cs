@@ -1,7 +1,56 @@
-﻿WelcomeUser();
-string playerName = GetUserName();
+﻿using MathGameLibrary;
 
-string GetUserName()
+WelcomeUser();
+
+PlayerModel player = new();
+player.PlayerName = GetUserName();
+
+bool play = true;
+while (play)
+{
+    Operator operation = GetOperatorChoice();
+    PlayRound(operation, player);
+
+    string choice = GetMenuChoice();
+    if (choice == "h")
+    {
+        DisplayHistory(player);
+        choice = GetMenuChoice();
+    }
+    else if (choice == "n")
+    {
+        play = false;
+        Console.WriteLine("Thanks for playing!");
+        Console.ReadLine();
+    }
+}
+
+void DisplayHistory(PlayerModel player)
+{
+    throw new NotImplementedException();
+}
+
+string GetMenuChoice()
+{
+    throw new NotImplementedException();
+}
+
+void PlayRound(Operator choice, PlayerModel player)
+{
+    throw new NotImplementedException();
+}
+
+bool KeepPlaying()
+{
+    throw new NotImplementedException();
+}
+
+Operator GetOperatorChoice()
+{
+    throw new NotImplementedException();
+}
+
+static string GetUserName()
 {
     string? name;
     do
