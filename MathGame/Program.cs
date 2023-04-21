@@ -8,7 +8,7 @@ player.PlayerName = GetUserName();
 bool play = true;
 while (play)
 {
-    Operator operation = GetOperatorChoice();
+    Operator operation = GetOperatorChoice(player);
     PlayRound(operation, player);
 
     string choice = GetMenuChoice();
@@ -40,14 +40,25 @@ void PlayRound(Operator choice, PlayerModel player)
     throw new NotImplementedException();
 }
 
-bool KeepPlaying()
+Operator GetOperatorChoice(PlayerModel player)
 {
-    throw new NotImplementedException();
-}
+    string userInput;
+    do
+    {
+    Console.WriteLine($"{player.PlayerName}, Select an operation");
+    Console.Write($"1:{Operator.Add}, 2:{Operator.Subtract}, 3:{Operator.Multiply}, 4:{Operator.Divide} ");
 
-Operator GetOperatorChoice()
-{
-    throw new NotImplementedException();
+    userInput = Console.ReadLine()!;
+    } while (userInput != "1" && userInput != "2" && userInput != "3" && userInput != "4");
+
+
+    return userInput switch
+    {
+        "1" => Operator.Add,
+        "2" => Operator.Subtract,
+        "3" => Operator.Multiply,
+        _ => Operator.Divide,
+    };
 }
 
 static string GetUserName()
@@ -58,6 +69,7 @@ static string GetUserName()
         Console.Write("Please enter your name: ");
         name = Console.ReadLine()!;
     } while (name == string.Empty);
+    Console.WriteLine();
     return name;
 }
 
