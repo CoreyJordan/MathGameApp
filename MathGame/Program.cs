@@ -13,7 +13,7 @@ bool play = true;
 while (play)
 {
     Operator operation = GetOperatorChoice(player);
-        PlayRound(operation, player);
+    PlayRound(operation, player);
 
     string choice = GetMenuChoice();
     if (choice == "h")
@@ -64,12 +64,13 @@ void PlayRound(Operator mode, PlayerModel player)
         {
             Console.WriteLine($"Sorry, the correct answer is {correctAnswer}");
         }
-        player.GameHistory.Add(round);
-        Console.WriteLine("Round Results");
-        Console.WriteLine($"{round.CorrectAnswers} out of {round.NumberOfQuestions} correct: {round.PercentCorrect}%");
-        Console.ReadLine();
     }
-}
+    player.GameHistory.Add(round);
+    Console.WriteLine("Round Results");
+    Console.WriteLine($"{round.CorrectAnswers} out of {round.NumberOfQuestions} correct: {round.PercentCorrect}%");
+    Console.Write("Press enter to continue...");
+    Console.ReadLine();
+    }
 
 char GetSymbol(Operator mode)
 {
