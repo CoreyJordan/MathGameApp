@@ -58,6 +58,14 @@ void PlayRound(Operator mode, PlayerModel player)
     {
         int number1 = GameLogic.GetRandomNumber();
         int number2 = GameLogic.GetRandomNumber();
+        if (mode == Operator.Divide)
+        {
+            while (number1 % number2 != 0) 
+            {
+                number1 = GameLogic.GetRandomNumber();
+                number2 = GameLogic.GetRandomNumber();
+            }
+        }
         char symbol = GetSymbol(mode);
 
         Console.Write($"{number1} {symbol} {number2} = ");
