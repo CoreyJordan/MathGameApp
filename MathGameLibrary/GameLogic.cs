@@ -10,7 +10,26 @@ namespace MathGameLibrary
     {
         public static int Solution(int number1, int number2, Operator mode)
         {
-            throw new NotImplementedException();
+            int answer;
+            switch (mode)
+            {
+                case Operator.Add:
+                    answer = number1 + number2;
+                    break;
+                case Operator.Subtract:
+                    answer = number1 - number2;
+                    break;
+                case Operator.Multiply:
+                    answer = number1 * number2;
+                    break;
+                case Operator.Divide:
+                    answer = number1 / number2;
+                    break;
+                default:
+                    answer = -1;
+                    break;
+            }
+            return answer;
         }
 
         public static int GetRandomNumber()
