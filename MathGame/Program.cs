@@ -14,20 +14,8 @@ while (play)
     Operator operation = GetOperatorChoice(player);
     PlayRound(operation, player);
 
-    string choice = GetMenuChoice();
-    if (choice == "H")
-    {
-        DisplayHistory(player);
-        choice = GetMenuChoice();
-        if (choice == "Q")
-        {
-            play = EndGame();
-        }
-    }
-    else if (choice == "Q")
-    {
-        play = EndGame();
-    }
+    
+    play = KeepPlaying(player, play);
 }
 
 void DisplayHistory(PlayerModel player)
@@ -170,5 +158,21 @@ static bool EndGame()
     bool play = false;
     Console.WriteLine("Thanks for playing!");
     Console.ReadLine();
+    return play;
+}
+
+bool KeepPlaying(PlayerModel player, bool play)
+{
+    string choice = GetMenuChoice();
+    if (choice == "H")
+    {
+        DisplayHistory(player);
+        play = KeepPlaying(player, play);
+    }
+    else if (choice == "Q")
+    {
+        play = EndGame();
+    }
+
     return play;
 }
