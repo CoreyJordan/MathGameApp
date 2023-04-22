@@ -16,16 +16,18 @@ while (play)
     PlayRound(operation, player);
 
     string choice = GetMenuChoice();
-    if (choice == "h")
+    if (choice == "H")
     {
         DisplayHistory(player);
         choice = GetMenuChoice();
+        if (choice == "Q")
+        {
+            play = EndGame();
+        }
     }
-    else if (choice == "n")
+    else if (choice == "Q")
     {
-        play = false;
-        Console.WriteLine("Thanks for playing!");
-        Console.ReadLine();
+        play = EndGame();
     }
 }
 
@@ -36,7 +38,18 @@ void DisplayHistory(PlayerModel player)
 
 string GetMenuChoice()
 {
-    throw new NotImplementedException();
+    string choice;
+    do
+    {
+        Console.WriteLine("Select an option:");
+        Console.Write("P: Play again, Q: Quit, H: Game History ");
+        choice = Console.ReadLine()!.ToUpper();
+        if (choice != "P" && choice != "Q" && choice != "H")
+        {
+            Console.Write("Please choose again. ");
+        }
+    } while (choice != "P" && choice != "Q" && choice != "H");
+    return choice;
 }
 
 void PlayRound(Operator mode, PlayerModel player)
@@ -139,4 +152,12 @@ static void WelcomeUser()
     Console.WriteLine("Created by Corey Jordan, 2023");
     Console.WriteLine("Designed for The C# Academy \"Math Game\"");
     Console.WriteLine();
+}
+
+static bool EndGame()
+{
+    bool play = false;
+    Console.WriteLine("Thanks for playing!");
+    Console.ReadLine();
+    return play;
 }
