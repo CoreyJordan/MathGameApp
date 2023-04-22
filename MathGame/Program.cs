@@ -85,7 +85,17 @@ char GetSymbol(Operator mode)
 
 int GetUserGuess()
 {
-    throw new NotImplementedException();
+    int userGuess;
+    bool isValid;
+    do
+    {
+        isValid = int.TryParse(Console.ReadLine(), out userGuess);
+        if (!isValid)
+        {
+            Console.WriteLine("Invalid guess, please try again.");
+        }
+    } while (!isValid);
+    return userGuess;
 }
 
 Operator GetOperatorChoice(PlayerModel player)
