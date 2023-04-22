@@ -40,7 +40,12 @@ namespace MathGameLibrary
 
         public static bool CheckGuess(int correctAnswer, int userGuess)
         {
-            throw new NotImplementedException();
+            bool isMatch = false;
+            if (correctAnswer == userGuess)
+            {
+                isMatch = true;
+            }
+            return isMatch;
         }
     }
 }
