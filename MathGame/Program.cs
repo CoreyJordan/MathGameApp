@@ -1,6 +1,4 @@
 ﻿using MathGameLibrary;
-using System.Diagnostics;
-using System.Linq.Expressions;
 
 WelcomeUser();
 
@@ -9,6 +7,7 @@ PlayerModel player = new()
     PlayerName = GetUserName()
 };
 
+// Main program
 bool play = true;
 while (play)
 {
@@ -33,7 +32,17 @@ while (play)
 
 void DisplayHistory(PlayerModel player)
 {
-    throw new NotImplementedException();
+    double overall = 0.0;
+    foreach (GameModel game in player.GameHistory)
+    {
+        overall += game.PercentCorrect;
+        Console.Write($"Game {player.GameHistory.IndexOf(game) + 1}  {game.Operation} ");
+        Console.WriteLine($"{game.CorrectAnswers} correct, {game.PercentCorrect}%");
+        Console.WriteLine();
+    }
+    double score = overall / player.GameHistory.Count;
+    Console.WriteLine($"Total score: {score:n0}%");
+    Console.WriteLine();
 }
 
 string GetMenuChoice()
@@ -49,6 +58,7 @@ string GetMenuChoice()
             Console.Write("Please choose again. ");
         }
     } while (choice != "P" && choice != "Q" && choice != "H");
+    Console.WriteLine();
     return choice;
 }
 
@@ -83,6 +93,7 @@ void PlayRound(Operator mode, PlayerModel player)
     Console.WriteLine($"{round.CorrectAnswers} out of {round.NumberOfQuestions} correct: {round.PercentCorrect}%");
     Console.Write("Press enter to continue...");
     Console.ReadLine();
+    Console.Clear();
     }
 
 char GetSymbol(Operator mode)
