@@ -43,7 +43,11 @@
   <ItemGroup>
     <Compile Include="Enums.cs" />
     <Compile Include="GameLogic.cs" />
-    <Compile Include="GameModel.cs" />
+    <Compile Include="Game\EasyGameModel.cs" />
+    <Compile Include="Game\GameModel.cs" />
+    <Compile Include="Game\HardGameModel.cs" />
+    <Compile Include="Game\IGameMode.cs" />
+    <Compile Include="Game\NormalGameModel.cs" />
     <Compile Include="PlayerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

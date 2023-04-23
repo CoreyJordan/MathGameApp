@@ -1,4 +1,4 @@
-﻿namespace MathGameLibrary
+﻿namespace MathGameLibrary.Game
 {
     public class GameModel
     {

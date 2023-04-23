@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MathGameLibrary.Game;
 
 namespace MathGameLibrary
 {

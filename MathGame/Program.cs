@@ -1,4 +1,6 @@
 ﻿using MathGameLibrary;
+using MathGameLibrary.Game;
+using System.Linq.Expressions;
 
 WelcomeUser();
 
@@ -12,10 +14,38 @@ bool play = true;
 while (play)
 {
     Operator operation = GetOperatorChoice(player);
-    PlayRound(operation, player);
-
-    
+    Difficulty difficulty = GetDifficulty();
+    PlayRound(operation, player, difficulty);
     play = KeepPlaying(player, play);
+}
+
+Difficulty GetDifficulty()
+{
+    bool isValid = false;
+    string choice;
+    Difficulty difficulty = Difficulty.Normal;
+    do
+    {
+        Console.Write("Choose a difficulty, E: Easy, N: Normal, H: Hard ");
+        choice = Console.ReadLine()!.ToUpper();
+        Console.WriteLine();
+        if (choice == "E" || choice == "N" || choice == "H")
+        {
+            difficulty = choice switch
+            {
+                "E" => Difficulty.Easy,
+                "H" => Difficulty.Hard,
+                _ => Difficulty.Normal,
+            };
+            isValid = true;
+        }
+        else
+        {
+            Console.Write("Please try again. ");
+        }
+    } while (!isValid);
+
+    return difficulty;
 }
 
 void DisplayHistory(PlayerModel player)
@@ -23,8 +53,10 @@ void DisplayHistory(PlayerModel player)
     double overall = 0.0;
     foreach (GameModel game in player.GameHistory)
     {
+        IGameMode gameDiff = (IGameMode)game;
         overall += game.PercentCorrect;
         Console.Write($"Game {player.GameHistory.IndexOf(game) + 1}  {game.Operation} ");
+        Console.Write($"[{gameDiff.Difficulty}] ");
         Console.WriteLine($"{game.CorrectAnswers} correct, {game.PercentCorrect}%");
         Console.WriteLine();
     }
@@ -50,20 +82,25 @@ string GetMenuChoice()
     return choice;
 }
 
-void PlayRound(Operator mode, PlayerModel player)
+void PlayRound(Operator mode, PlayerModel player, Difficulty difficulty)
 {
-    GameModel round = new();
+    IGameMode round = difficulty switch
+    {
+        Difficulty.Hard => new HardGameModel(),
+        Difficulty.Easy => new EasyGameModel(),
+        _ => new NormalGameModel()
+    };
 
     for (int i = 0; i < round.NumberOfQuestions; i++)
     {
-        int number1 = GameLogic.GetRandomNumber();
-        int number2 = GameLogic.GetRandomNumber();
+        int number1 = round.GetRand();
+        int number2 = round.GetRand();
         if (mode == Operator.Divide)
         {
             while (number1 % number2 != 0) 
             {
-                number1 = GameLogic.GetRandomNumber();
-                number2 = GameLogic.GetRandomNumber();
+                number1 = round.GetRand();
+                number2 = round.GetRand();
             }
         }
         char symbol = GetSymbol(mode);
@@ -84,7 +121,7 @@ void PlayRound(Operator mode, PlayerModel player)
             Console.WriteLine($"Sorry, the correct answer is {correctAnswer}");
         }
     }
-    player.GameHistory.Add(round);
+    player.GameHistory.Add((GameModel)round);
     Console.WriteLine("Round Results");
     Console.WriteLine($"{round.CorrectAnswers} out of {round.NumberOfQuestions} correct: {round.PercentCorrect}%");
     Console.Write("Press enter to continue...");
